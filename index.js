@@ -8,9 +8,20 @@ const createClient = redis.createClient;
 const client = createClient();
 
 client.on("error", async (err) => {
-  await client.connect();
   console.log("Redis Client Error", err);
 });
+
+async function check() {
+  await client.connect();
+
+  await client.set("dsadad", "vaasalue");
+
+  const value = await client.get("dsadad");
+
+  console.log(value);
+}
+
+check();
 
 app.use(cors());
 app.use(express.json());
