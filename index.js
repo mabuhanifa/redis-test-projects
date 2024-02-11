@@ -2,6 +2,15 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
+const redis = require("redis");
+const createClient = redis.createClient;
+
+const client = createClient();
+
+client.on("error", async (err) => {
+  await client.connect();
+  console.log("Redis Client Error", err);
+});
 
 app.use(cors());
 app.use(express.json());
